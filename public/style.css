@@ -945,6 +945,8 @@ input:checked + .toggle-slider:before {
 #camera-quality option {
   background: #000;
   color: #00f0ff;
+  padding: 8px;
+  font-size: 14px; /* Add this */
 }
 
 .settings-footer {

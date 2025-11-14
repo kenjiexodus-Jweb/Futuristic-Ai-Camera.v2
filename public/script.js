@@ -160,14 +160,18 @@ settingsSection.addEventListener("click", () => {
     
     // Restrict camera quality
     if (cameraQuality) {
-      Array.from(cameraQuality.options).forEach(option => {
-        if (parseInt(option.value) > 720) {
-          option.disabled = true;
-          option.textContent = option.textContent.replace(" 🔒 Premium", "") + " 🔒 Premium";
-        }
-      });
-      cameraQuality.value = "720";
+  Array.from(cameraQuality.options).forEach(option => {
+    const value = parseInt(option.value);
+    if (value > 720) {
+      option.disabled = true;
+      // Set fixed text per resolution
+      if (value === 1080) option.textContent = "1080p 🔒";
+      if (value === 1440) option.textContent = "1440p 🔒";
+      if (value === 2160) option.textContent = "2160p 🔒";
     }
+  });
+  cameraQuality.value = "720";
+}
   }
 });
 closeSettingsBtn.addEventListener("click", () => {
