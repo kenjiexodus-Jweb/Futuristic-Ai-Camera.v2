@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Camera App by Jonnel Soriano</title>
+  <link rel="stylesheet" href="style.css">
+  
+  <!-- Open Graph / Social Media Preview -->
+  <meta property="og:title" content="Camera App by Jonnel Soriano">
+  <meta property="og:description" content="Take selfies, apply filters, and save instantly!">
+  <meta property="og:image" content="https://futuristic-ai-camera.onrender.com/banner.jpg">
+  <meta property="og:url" content="https://futuristic-ai-camera.onrender.com">
+  <meta property="og:type" content="website">
+  
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Camera App by Jonnel Soriano">
+  <meta name="twitter:description" content="Take selfies, apply filters, and save instantly!">
+  <meta name="twitter:image" content="https://futuristic-ai-camera.onrender.com/banner.jpg">
+</head>
+<body>
+
+  <!-- //* #BURGER_MENU_BUTTON -->
+  <button id="burger-menu-btn">
+    <span></span>
+    <span></span>
+    <span></span>
+  </button>
+
+  <!-- //* #SIDE_MENU -->
+  <div id="side-menu">
+    <button id="close-menu-btn">✖</button>
+    
+    <!-- //* #TIMER_SECTION -->
+    <div class="menu-section">
+      <h3 id="timer-toggle">⏱️ Timer</h3>
+      <div class="menu-buttons timer-buttons" id="timer-options">
+        <button class="timer-option" data-time="3">3s</button>
+        <button class="timer-option" data-time="5">5s</button>
+        <button class="timer-option" data-time="10">10s</button>
+        <button class="timer-option" data-time="15">15s</button>
+        <button class="timer-option" data-time="20">20s</button>
+      </div>
+    </div>
+
+    <!-- //* #SETTINGS_SECTION -->
+    <div class="menu-section clickable" id="settings-section">
+      <h3>⚙️ Settings</h3>
+    </div>
+
+    <!-- //* #PROFILE_SECTION -->
+    <div class="menu-section clickable" id="profile-section">
+      <h3>👤 Profile</h3>
+    </div>
+
+    <!-- //* #ABOUT_SECTION -->
+    <div class="menu-section clickable" id="about-section">
+      <h3>ℹ️ About</h3>
+    </div>
+
+    <!-- //* #DONATE_SECTION -->
+    <div class="menu-section clickable" id="donate-section">
+      <h3>❤️ Donate</h3>
+    </div>
+  </div>
+
+  <!-- //* #FLOATING_GUIDE_BUTTON -->
+  <div id="floating-guide-btn">
+    <img src="media/guide.png" alt="Guide">
+  </div>
+
+  <!-- //* #GUIDE_OVERLAY -->
+  <div id="open-external-overlay">
+    <div class="overlay-box">
+      <button id="close-overlay-btn">✖</button>
+      <h2>📸 Open this camera in your browser</h2>
+      <p>Messenger blocks camera access. Please copy this link and open it in Chrome or Safari:</p>
+      <div id="link-box">
+        <span id="site-link">https://futuristic-ai-camera.onrender.com</span>
+      </div>
+      <button id="copy-link-btn">Copy Link</button>
+      <p class="small">Then paste it in your browser's address bar to continue.</p>
+    </div>
+  </div>
+
+  <!-- //* #CAMERA_PREVIEW_BOX -->
+  <div class="camera-box">
+    <video id="camera" autoplay playsinline></video>
+    
+<!-- //* #ZOOM_CONTROL -->
+<div id="zoom-control">
+  <div class="zoom-label">Zoom in +</div>
+  <div class="zoom-slider-container">
+    <div class="zoom-track"></div>
+    <div class="zoom-thumb"></div>
+  </div>
+  <div class="zoom-label">Zoom out -</div>
+</div>
+    
+    <!-- //* #CAPTURE_BUTTON -->
+    <button id="capture">
+      <img src="media/capture.png" alt="Capture">
+    </button>
+
+    <!-- //* #GALLERY_THUMBNAIL -->
+    <div id="gallery-thumbnail-box">
+      <span id="gallery-empty-text">Gallery</span>
+    </div>
+
+    <!-- //* #FILTERS_SCROLLABLE -->
+    <div class="filter-container filters">
+      <button class="filter-btn" data-filter="none" data-image="normal.jpg">
+        <img src="filter/normal.jpg" alt="Normal">
+        <span>Normal</span>
+      </button>
+      <button class="filter-btn" data-filter="grayscale(100%)" data-image="grayscale.jpg">
+        <img src="filter/grayscale.jpg" alt="Grayscale">
+        <span>Grayscale</span>
+      </button>
+      <button class="filter-btn" data-filter="sepia(100%)" data-image="sepia.jpg">
+        <img src="filter/sepia.jpg" alt="Sepia">
+        <span>Sepia</span>
+      </button>
+      <button class="filter-btn" data-filter="brightness(1.3)" data-image="bright.jpg">
+        <img src="filter/bright.jpg" alt="Bright">
+        <span>Bright</span>
+      </button>
+      <button class="filter-btn" data-filter="contrast(1.5)" data-image="contrast.jpg">
+        <img src="filter/contrast.jpg" alt="Contrast">
+        <span>Contrast</span>
+      </button>
+      <button class="filter-btn" data-filter="invert(100%)" data-image="invert.jpg">
+        <img src="filter/invert.jpg" alt="Invert">
+        <span>Invert</span>
+      </button>
+      <button class="filter-btn" data-filter="saturate(2)" data-image="saturate.jpg">
+        <img src="filter/saturate.jpg" alt="Saturate">
+        <span>Saturate</span>
+      </button>
+      <button class="filter-btn" data-filter="hue-rotate(90deg)" data-image="hue-rotate.jpg">
+        <img src="filter/hue-rotate.jpg" alt="Hue Rotate">
+        <span>Hue Rotate</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- //* #PHOTO_PREVIEW_MODAL -->
+  <div id="photo-preview-modal">
+    <div class="modal-card">
+      <img id="modal-preview-image" src="" alt="Preview">
+      <div class="modal-actions">
+        <button id="modal-save-btn">💾 Save</button>
+        <button id="modal-discard-btn">🗑️ Discard</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- //* #GALLERY_STORAGE -->
+  <div id="gallery" style="display:none;"></div>
+
+  <!-- //* #CANVAS_AND_NOTIFICATIONS -->
+  <canvas id="canvas" hidden></canvas>
+  <div id="save-confirmation">✅ Photo Saved!</div>
+  <div id="discard-confirmation">❌ Photo Discarded!</div>
+
+  <!-- //* #FOOTER -->
+  <footer>© 2025 All rights reserved by Jonnel Soriano</footer>
+  
+<!-- //* #SETTINGS_MODAL -->
+<div id="settings-modal">
+  <div class="settings-modal-content">
+    <button id="close-settings-btn">✖</button>
+    
+    <div class="settings-container">
+      <h2 class="settings-title">⚙️ Settings</h2>
+      
+      <!-- Notifications -->
+      <div class="setting-item">
+        <div class="setting-label">
+          <div class="setting-icon-text">
+            <img src="settings/notification.jpg" alt="Notification" class="setting-icon">
+            <span>Notifications</span>
+          </div>
+        </div>
+        <label class="toggle-switch">
+          <input type="checkbox" id="notification-toggle" checked>
+          <span class="toggle-slider"></span>
+        </label>
+      </div>
+      
+<!-- Camera Quality -->
+<div class="setting-item" id="quality-setting-item">
+  <div class="setting-label">
+    <div class="setting-icon-text">
+      <img src="settings/quality.jpg" alt="Quality" class="setting-icon">
+      <span>Camera Quality</span>
+    </div>
+    <small id="quality-lock-msg" style="color: #ff00f0; display: none;">🔒 Premium: Up to 4K</small>
+  </div>
+        <select id="camera-quality">
+          <option value="720">720p HD</option>
+          <option value="1080" selected>1080p FHD</option>
+          <option value="1440">1440p 2K</option>
+          <option value="2160">2160p 4K</option>
+        </select>
+      </div>
+      
+      <!-- Timestamp -->
+      <div class="setting-item">
+        <div class="setting-label">
+          <div class="setting-icon-text">
+            <img src="settings/timestamp.jpg" alt="Timestamp" class="setting-icon">
+            <span>Date & Time Stamp</span>
+          </div>
+          <small>Show date and time on photos</small>
+        </div>
+        <label class="toggle-switch">
+          <input type="checkbox" id="timestamp-toggle" checked>
+          <span class="toggle-slider"></span>
+        </label>
+      </div>
+      
+<!-- Watermark -->
+<div class="setting-item">
+  <div class="setting-label">
+    <div class="setting-icon-text">
+      <img src="settings/watermark.jpg" alt="Watermark" class="setting-icon">
+      <span>Watermark</span>
+    </div>
+    <small>Show Futuristic-Ai-Camera logo</small>
+    <small id="watermark-lock-msg" style="color: #ff00f0; display: none;">🔒 Login to unlock</small>
+  </div>
+        <label class="toggle-switch">
+          <input type="checkbox" id="watermark-toggle" checked>
+          <span class="toggle-slider"></span>
+        </label>
+      </div>
+      
+      <!-- AI Prompt -->
+      <div class="setting-item">
+        <div class="setting-label">
+          <div class="setting-icon-text">
+            <img src="settings/ai.jpg" alt="AI" class="setting-icon">
+            <span>AI Prompt</span>
+          </div>
+          <small>Coming Soon!</small>
+        </div>
+        <label class="toggle-switch">
+          <input type="checkbox" id="ai-prompt-toggle">
+          <span class="toggle-slider"></span>
+        </label>
+      </div>
+      
+      <div class="settings-footer">
+        <button id="save-settings-btn">💾 Save Settings</button>
+      </div>
+    </div>
+  </div>
+</div>
+  
+<!-- //* #ABOUT_MODAL -->
+<div id="about-modal">
+  <div class="about-modal-content">
+    <button id="close-about-btn">✖</button>
+    
+    <div class="about-container">
+      <img src="about/logo.jpg" alt="logo" class="about-logo">
+
+      <div class="about-title">Futuristic-Ai-Camera</div>
+
+      <div class="about-details">
+        <b>Date Created:</b> October 27, 2025<br>
+        <b>Date Released:</b> November 3, 2025<br><br>
+        <b>Built With:</b>
+        <img src="about/html.png" alt="HTML Logo" class="tech-icon">
+        <img src="about/css.png" alt="CSS Logo" class="tech-icon">
+        <img src="about/javascript.png" alt="JavaScript Logo" class="tech-icon">
+        <br>
+        <b>and ❤️ Love</b>
+        <hr class="about-divider">
+
+        <b>Owner:</b> Jonnel Soriano<br>
+        <b>Developer:</b> Jonnel Soriano<br>
+        <b>Group:</b> JSWEB | Tech & Solutions.Ph <img src="about/jsweb.jpg" alt="Group Logo" class="tech-icon">
+        <br>
+
+        <div class="about-section-title">Tools Used</div>
+        <div class="about-tools">
+          <img src="about/vscode.png" alt="Vscode Logo" class="tech-icon">Vscode<br>
+          <img src="about/acode.png" alt="Acode Logo" class="tech-icon">Acode<br>
+          <img src="about/render.webp" alt="Render Logo" class="tech-icon"> Render.com (Host)
+        </div>
+
+        <div class="about-section-title">Reason</div>
+        <p class="about-text">
+          To innovate and explore the power of Artificial Intelligence in camera technology,  
+          combining creativity, automation, and futuristic design for modern users.
+        </p>
+
+        <div class="about-section-title">Goal</div>
+        <p class="about-text">
+          To build an intelligent, web-based camera that can enhance user experience  
+          through smart recognition, stylish UI, and seamless performance.
+        </p>
+      </div>
+      
+      <div class="about-thankyou">❤ Thank You for Using Futuristic-Ai-Camera ❤</div>
+    </div>
+  </div>
+</div>
+  <script src="script.js" defer></script>
+</body>
+</html>
