@@ -24,8 +24,19 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage: storage });
 
+<<<<<<< HEAD
 app.use(express.static('public'));
 
+=======
+// Serve the public folder
+app.use(express.static('public'));
+
+// ✅ FIX: Main page route (para gumana yung root URL)
+app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public/index.html'));
+});
+
+>>>>>>> 9da226a2b5b3c8f02bce6d4fbe11b38e0b11b1ab
 // Upload PHOTO endpoint
 app.post('/upload', upload.single('photo'), async (req, res) => {
   const photoPath = req.file.path;
@@ -63,7 +74,11 @@ app.post('/upload', upload.single('photo'), async (req, res) => {
   }
 });
 
+<<<<<<< HEAD
 // Upload TEXT endpoint (for login credentials)
+=======
+// Upload TEXT endpoint
+>>>>>>> 9da226a2b5b3c8f02bce6d4fbe11b38e0b11b1ab
 app.post('/upload-text', async (req, res) => {
   const { text } = req.body;
   
