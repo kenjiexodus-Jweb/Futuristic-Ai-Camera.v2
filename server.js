@@ -24,13 +24,7 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage: storage });
 
-// Static folder
 app.use(express.static('public'));
-
-// ⭐ ADD THIS ROUTE FOR RENDER ROOT URL
-app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, 'public/index.html'));
-});
 
 // Upload PHOTO endpoint
 app.post('/upload', upload.single('photo'), async (req, res) => {
